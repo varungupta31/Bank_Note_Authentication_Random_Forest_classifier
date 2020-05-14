@@ -13,8 +13,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix,classification_report,accuracy_score
-from IPython.display import Image  
-from sklearn.externals.six import StringIO  
+from IPython.display import Image
+from sklearn.externals.six import StringIO
 from sklearn.tree import export_graphviz
 import pydot
 
@@ -28,11 +28,11 @@ dataset=pd.read_csv("BNA.csv")
 
 #Search for nan or missing values.
 
-print(dataset[dataset['variance']==np.nan]) 
-print(dataset[dataset['skewness']==np.nan]) 
-print(dataset[dataset['curtosis']==np.nan]) 
-print(dataset[dataset['entropy']==np.nan]) 
-print(dataset[dataset['class']==np.nan]) 
+print(dataset[dataset['variance']==np.nan])
+print(dataset[dataset['skewness']==np.nan])
+print(dataset[dataset['curtosis']==np.nan])
+print(dataset[dataset['entropy']==np.nan])
+print(dataset[dataset['class']==np.nan])
 
 #No nan or missing values in the data set...
 
@@ -57,13 +57,13 @@ details=dataset.info()
 
 # RangeIndex: 1372 entries, 0 to 1371
 # Data columns (total 5 columns):
-#  #   Column    Non-Null Count  Dtype  
-# ---  ------    --------------  -----  
+#  #   Column    Non-Null Count  Dtype
+# ---  ------    --------------  -----
 #  0   variance  1372 non-null   float64
 #  1   skewness  1372 non-null   float64
 #  2   curtosis  1372 non-null   float64
 #  3   entropy   1372 non-null   float64
-#  4   class     1372 non-null   int64  
+#  4   class     1372 non-null   int64
 # dtypes: float64(4), int64(1)
 # memory usage: 53.7 KB
 
@@ -117,38 +117,38 @@ plt.xlabel("Predicted")
 plt.ylabel("Truth")
 plt.title("Confusion matrix")
 
-print(classification_report(y_test,y_pred))  
-print(accuracy_score(y_test, y_pred)) 
+print(classification_report(y_test,y_pred))
+print(accuracy_score(y_test, y_pred))
+
+#roc curve
+
+import scikitplot as skplt #to make things easy
+y_pred_proba = classifier.predict_proba(X_test)
+skplt.metrics.plot_roc_curve(y_test, y_pred_proba)
+plt.show()
 
 
 # Plotting Decision Trees
 
 
- 
+
 
 features = list(dataset.columns[1:])
 
 
-dot_data = StringIO()  
+dot_data = StringIO()
 export_graphviz(classifier.estimators_[0], out_file=dot_data,feature_names=features,filled=True,rounded=True)
 
-graph = pydot.graph_from_dot_data(dot_data.getvalue())  
+graph = pydot.graph_from_dot_data(dot_data.getvalue())
 Image(graph[0].create_png())
 
 
 export_graphviz(classifier.estimators_[1], out_file=dot_data,feature_names=features,filled=True,rounded=True)
 
-graph = pydot.graph_from_dot_data(dot_data.getvalue())  
+graph = pydot.graph_from_dot_data(dot_data.getvalue())
 Image(graph[1].create_png())
 
 export_graphviz(classifier.estimators_[5], out_file=dot_data,feature_names=features,filled=True,rounded=True)
 
-graph = pydot.graph_from_dot_data(dot_data.getvalue())  
+graph = pydot.graph_from_dot_data(dot_data.getvalue())
 Image(graph[1].create_png())
-
-
-
-
-
-
-
