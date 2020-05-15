@@ -46,7 +46,7 @@ X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.20)
 
 sc=StandardScaler()
 X_sc=sc.fit_transform(X)
-y_sc=sc.fit_transform(y)
+#y_sc=sc.fit_transform(y)
 X_trainSC=sc.fit_transform(X_train)
 X_testSC=sc.fit_transform(X_test)
 
@@ -125,9 +125,9 @@ print(accuracy_score(y_test, y_pred))
 import scikitplot as skplt #to make things easy
 y_pred_proba = classifier.predict_proba(X_test)
 skplt.metrics.plot_roc_curve(y_test, y_pred_proba)
+
+plt.suptitle('80:20 Train test Split',fontsize=10)
 plt.show()
-
-
 # Plotting Decision Trees
 
 
